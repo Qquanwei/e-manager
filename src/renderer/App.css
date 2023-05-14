@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  input {
+    outline: none;
+  }
+}
+
+.ant-btn-primary {
+  background-color: #1677ff;
+}
