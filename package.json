@@ -117,8 +117,7 @@
     "react-router-dom": "^6.8.1",
     "recoil": "^0.7.7",
     "recoil-enhance": "^0.0.2",
-    "sqlite": "^4.2.0",
-    "sqlite3": "^5.1.6"
+    "sqlite": "^4.2.0"
   },
   "devDependencies": {
     "@electron/notarize": "^1.2.3",

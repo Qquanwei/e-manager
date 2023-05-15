@@ -1,6 +1,7 @@
 // index page
 import { selector, atom, useRecoilState } from 'recoil';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { SettingOutlined } from '@ant-design/icons';
 import { Container } from 'antd';
 
@@ -13,10 +14,14 @@ function Index() {
   const [showSetting, setShowSetting] = useState(false);
   const [comics, setComics] = useState([]);
 
-  const onClickRefresh = useCallback(() => {
-    return utils.invoke('getComics', {}).then(({ comics }) => {
+  const onRefresh = useCallback(() => {
+    return utils.invoke('getComics', { page: 0, pageSize: 20}).then(({ comics }) => {
       setComics(comics);
     });
+  }, []);
+
+  useEffect(() => {
+    onRefresh();
   }, []);
 
   const onClickSetting = useCallback(() => {
@@ -44,7 +49,16 @@ function Index() {
         </Input>
       </div>
 
-      <div>
+      <div className="text-black">
+        {
+          (comics || []).map((comic) => {
+            return (
+              <Link to={`/comic/${comic.id}`} key={comic.id} className="cursor-pointer w-[300px] h-[300px] block bg-gray-300/10 rounded p-2 border-box" data-id={comic.id}>
+                <div>{ comic.title }</div>
+              </Link>
+            )
+          })
+        }
       </div>
 
       <Setting show={showSetting} onClose={onSettingClose} />

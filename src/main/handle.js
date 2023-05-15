@@ -99,6 +99,16 @@ const handle = {
     });
   },
 
+  // page from 0 to infinity
+  async getComics({ page, pageSize }) {
+    const db = await handle.getInternalDB();
+    const comics = await db.all(`select * from comics limit ${pageSize} offset ${page * pageSize}`);
+    return {
+      comics,
+      total: await db.get('select count(*) as cnt from comics').cnt
+    }
+  },
+
   async getComicList(path) {
     return await new Promise((resolve, reject) => {
       fs.readdir(path, { withFileTypes: true }, (err, files) => {
