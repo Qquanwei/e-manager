@@ -1,6 +1,9 @@
 import Koa from 'koa';
 import Router from '@koa/router';
+import koastatic from 'koa-static';
 import bodyParser from 'koa-bodyparser';
+import MIME from 'mime-types';
+import path from 'path';
 import cors from '@koa/cors';
 import buildDebug from 'debug';
 import config from './config';
@@ -17,7 +20,14 @@ function server() {
     handle.APP_START();
   }
 
-  router.post('/msg', async (ctx, next) => {
+  router.get('/img', async (ctx) => {
+    const { fileName, cover } = ctx.request.query;
+    DEBUG('img', fileName, cover);
+    const stream = handle.imgStream({ fileName, cover });
+    ctx.response.headers['Content-Type'] = MIME.lookup(cover);
+    ctx.body = stream;
+  });
+  router.post('/msg', async (ctx) => {
     const { name, params } = ctx.request.body;
     DEBUG('name:', name, ctx.request.body);
     if (handle[name]) {
@@ -26,7 +36,8 @@ function server() {
         ctx.body = value || {
           message: 'ok'
         };
-      } catch(error) {
+      } catch (error) {
+        console.error(error);
         ctx.status = 400;
         ctx.body = {
           message: error.message
@@ -40,11 +51,11 @@ function server() {
       };
     }
   });
-
   app.use(cors());
   app.use(bodyParser());
   app.use(router.routes());
   app.use(router.allowedMethods());
+  app.use(koastatic(path.join(__dirname, '../renderer')));
   app.listen(config.PORT);
 }
 

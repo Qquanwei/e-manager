@@ -168,14 +168,6 @@ const configuration: webpack.Configuration = {
       verbose: true,
     },
     setupMiddlewares(middlewares) {
-      console.log('Starting preload.js builder...');
-      const preloadProcess = spawn('npm', ['run', 'start:preload'], {
-        shell: true,
-        stdio: 'inherit',
-      })
-        .on('close', (code: number) => process.exit(code!))
-        .on('error', (spawnError) => console.error(spawnError));
-
       console.log('Starting Main Process...');
       let args = ['run', 'start:main'];
       if (process.env.MAIN_ARGS) {
@@ -188,7 +180,6 @@ const configuration: webpack.Configuration = {
         stdio: 'inherit',
       })
         .on('close', (code: number) => {
-          preloadProcess.kill();
           process.exit(code!);
         })
         .on('error', (spawnError) => console.error(spawnError));

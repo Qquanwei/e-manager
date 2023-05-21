@@ -43,7 +43,6 @@
     "rebuild": "electron-rebuild --parallel --types prod,dev,optional --module-dir release/app",
     "start": "ts-node ./.erb/scripts/check-port-in-use.js && npm run start:renderer",
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
-    "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
     "test": "jest"
   },
@@ -106,18 +105,24 @@
     "electron-log": "^4.4.8",
     "electron-store": "^8.1.0",
     "electron-updater": "^5.3.0",
+    "image-size": "^1.0.2",
     "is-electron": "^2.2.2",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.0",
+    "koa-static": "^5.0.0",
+    "mime-types": "^2.1.35",
     "nodemon": "^2.0.22",
     "postcss-loader": "^7.3.0",
+    "qrcode": "^1.5.3",
+    "ramda": "^0.29.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.8.1",
     "recoil": "^0.7.7",
     "recoil-enhance": "^0.0.2",
-    "sqlite": "^4.2.0"
+    "sqlite": "^4.2.0",
+    "sqlite3": "^5.1.6"
   },
   "devDependencies": {
     "@electron/notarize": "^1.2.3",
@@ -188,8 +193,8 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.erb.ElectronReact",
+    "productName": "e-manager",
+    "appId": "e-manager-app-id",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [

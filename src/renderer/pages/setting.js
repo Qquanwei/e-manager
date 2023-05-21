@@ -157,7 +157,6 @@ export default function Setting({ show, onClose }) {
         });
       }).then(() => {
       }).catch((error) => {
-        console.log(error);
         message.error({ content: error.message });
       }).finally(() => {
       });
