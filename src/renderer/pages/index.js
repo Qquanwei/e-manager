@@ -59,7 +59,7 @@ function Index() {
   const [comics, setComics] = useState([]);
   const [total, setTotal] = useState(0);
   const [hasMore, setHasMore] = useState(true);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
   const [page, setPage] = useState(1);
 
   const onRefresh = useCallback((page, pageSize, keyword) => {
@@ -135,7 +135,7 @@ function Index() {
         </Form>
       </div>
 
-      <div className="comic-grid-container text-black grid text-black bg-white">
+      <div className="comic-grid-container text-black grid text-black p-2">
         {(comics || []).map((comic) => {
           const style = getCardGridStyle(comic.width, comic.height);
           return (

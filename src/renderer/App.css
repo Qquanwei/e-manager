@@ -10,8 +10,8 @@
 
 @layer components {
   .comic-grid-container {
-    grid-auto-rows: 120px;
-    grid-template-columns: repeat(auto-fill, 120px);
+    grid-auto-rows: 150px;
+    grid-template-columns: repeat(auto-fill, 150px);
   }
 }
 .ant-btn-primary {
