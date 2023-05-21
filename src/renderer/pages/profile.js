@@ -24,19 +24,19 @@ export default function Profile() {
 
   return (
     <div>
-      <div className="flex py-4 px-10 sticky top-0 bg-white shadow">
+      <div className="flex py-4 px-10 sticky top-0 bg-white shadow items-center text-gray-500">
         <Link to="/">
           <Button>Home</Button>
         </Link>
         <div className="ml-2">{comic.title}</div>
       </div>
-      <div className="mt-2 px-4 flex">
+      <div className="mt-2 px-4 flex items-center">
         <Link
           to={`/comic/${id}`}
           className="block w-[300px] h-[350px] shrink-0 flex items-center overflow-hidden rounded border p-2"
         >
           <img
-            className="w-[300px] "
+            className="w-[300px] filter-[sepia(0.20)] "
             src={utils.imgUrl(comic.location, comic.imgList[0])}
           />
         </Link>
@@ -50,9 +50,9 @@ export default function Profile() {
                 <div className="mr-2"> {k}: </div>
                 {[].concat(parseTags(comic.tags[k])).map((tagValue) => {
                   return (
-                    <Tag className="cursor-pointer" key={tagValue}>
-                      {tagValue}{' '}
-                    </Tag>
+                    <Link key={tagValue} to={`/?q=${tagValue}`}>
+                      <Tag className="cursor-pointer">{tagValue}</Tag>
+                    </Link>
                   );
                 })}
               </div>
@@ -61,10 +61,10 @@ export default function Profile() {
         </div>
       </div>
       <div className="px-4 py-2">
-        <Link to={`/comic/${id}`}>
+        <Button onClick={onClickLocal}>在文件管理器中打开</Button>
+        <Link to={`/comic/${id}`} className='ml-2'>
           <Button>阅读</Button>
         </Link>
-        <Button onClick={onClickLocal}>在文件管理器中打开</Button>
       </div>
 
       <div className="px-10 mt-2">

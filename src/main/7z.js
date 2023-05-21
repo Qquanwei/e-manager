@@ -76,6 +76,8 @@ export async function getComicImgList(comicFileName, cache = true) {
 
   return datas.slice(start, -3).map((line) => {
     return line.split(' ').slice(-1)[0];
+  }).sort((a, b) => {
+    return Number(a.replace(/[^\d]*/g, '')) - Number(b.replace(/[^\d]*/g, ''));
   });
 }
 

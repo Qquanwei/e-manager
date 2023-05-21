@@ -45,11 +45,11 @@ function DirectoryInput({ name, className }) {
                   fields.map((field, index) => {
                     return (
                       <div key={field.key} className="h-[40px] flex items-center">
-                        <Form.Item label={`path${index + 1}`}>
+                        <Form.Item label={`扫描路径${index + 1}`}>
                           <Form.Item name={[index, "pathName"]} noStyle>
                             <DirectoryInputInternal />
                           </Form.Item>
-                          <Button onClick={() => operation.remove(index)}>delete</Button>
+                          <Button className='ml-2' danger onClick={() => operation.remove(index)}>delete</Button>
                           <span className="text-blue-300 ml-2 font-bold inline-flex">
                             {
                               (() => {
@@ -179,9 +179,6 @@ export default function Setting({ show, onClose }) {
               <Button className="ml-2" onClick={onClose}>Close</Button>
             </div>
           </Form>
-
-
-
         )
       },
       {

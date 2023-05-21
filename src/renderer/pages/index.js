@@ -1,7 +1,7 @@
 // index page
 import { useCallback, useState, useEffect } from 'react';
 import classNames from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { SettingOutlined } from '@ant-design/icons';
 import { Pagination, Input, Form, Button } from 'antd';
 
@@ -61,6 +61,7 @@ function Index() {
   const [hasMore, setHasMore] = useState(true);
   const [pageSize, setPageSize] = useState(50);
   const [page, setPage] = useState(1);
+  const [query, setQuery] = useSearchParams();
 
   const onRefresh = useCallback((page, pageSize, keyword) => {
     return utils
@@ -74,15 +75,14 @@ function Index() {
 
   const onSubmitSearch = useCallback(
     (data) => {
-      console.log(data);
       onRefresh(1, 20, data.search);
     },
     [page, pageSize]
   );
 
   useEffect(() => {
-    //utils.invoke('getLocalNetwork');
-    onRefresh(page, pageSize);
+    onRefresh(page, pageSize, query.get('q'));
+    setQuery({ q: '' });
   }, [page, pageSize]);
 
   const onClickSetting = useCallback(() => {
@@ -90,16 +90,17 @@ function Index() {
   }, []);
 
   const onSettingClose = useCallback(() => {
+    onRefresh(page, pageSize);
     setShowSetting(false);
-  }, []);
+  }, [page, pageSize]);
 
   const onClickQrCode = useCallback(() => {
     utils.showQrModal();
   }, []);
   return (
     <div className="text-[14px]">
-      <div className="sticky top-0 z-10 bg-white box-shadow">
-        <div className="text-[24px] text-[#333] flex p-4">
+      <div className="sticky top-0 z-10 py-2 bg-white box-shadow">
+        <div className="text-[24px] text-[#333] flex p-2">
           Ehentai Comic Manager
           <Button
             onClick={onClickSetting}
@@ -117,7 +118,7 @@ function Index() {
           onFinish={onSubmitSearch}
         >
           <Form.Item name="search" noStyle>
-            <Input className="w-[300px]" />
+            <Input className="w-[300px]" defaultValue={query.get('q')} />
           </Form.Item>
           <Button type="primary" htmlType="submit">
             Search
